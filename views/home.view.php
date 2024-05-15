@@ -1,5 +1,4 @@
-
-    <?php loadPartial('head'); ?>
+<?php loadPartial('head'); ?>
     <!-- 导航栏 -->
     
     <?php loadPartial('navbar'); ?>
