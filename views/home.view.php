@@ -1,14 +1,14 @@
 
-    <?php require basePath('views/partials/head.php');?>
+    <?php loadPartial('head'); ?>
     <!-- 导航栏 -->
     
-    <?php require basePath('views/partials/navbar.php')?>
+    <?php loadPartial('navbar'); ?>
 
     <!-- 展示区 -->
-    <?php require basePath('views/partials/showcase-search.php')?>
+    <?php loadPartial('showcase-search'); ?>
 
     <!-- 顶部横幅 -->
-    <?php require basePath('views/partials/top-banner.php')?>
+    <?php loadPartial('top-banner'); ?>
 
     <!-- 实习列表 -->
     <section>
@@ -85,7 +85,7 @@
 
 
         <!-- 底部横幅 -->
-    <?php require basePath('views/partials/bottom-banner.php')?>
+        <?php loadPartial('bottom-banner'); ?>
 
         
 <?php require basePath('views/partials/footer.php')?>
