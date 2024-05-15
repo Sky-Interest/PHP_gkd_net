@@ -23,4 +23,10 @@
             echo"{$viewPath}视图不存在!";
         }
     }
+
+    function inspect($value){
+        echo'<pre>';
+        var_dump($value);
+        echo '<pre>';
+    }
 ?>
