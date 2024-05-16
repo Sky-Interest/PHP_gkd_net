@@ -1,15 +1,5 @@
 <?php
 
-// $routes = require basePath('routes.php');
-// if (array_key_exists($uri, $routes)) {
-
-//     // inspect($uri);
-//     require(basePath($routes[$uri]));
-// } else {
-//     // inspect($routes);
-//     http_response_code(404);
-//     require(basePath($routes['404']));
-// }
 
 class Router
 {
@@ -56,7 +46,18 @@ class Router
                 return;
             }
         }
-        http_response_code(404);
-        loadView('error/404');
+        // http_response_code(404);
+        // loadView('error/404');
+        $this->error();
     }
+    
+    //接收HTTP状态码参数
+    public function error($httpCode = 404)
+{
+    http_response_code($httpCode);
+    loadView("error/{$httpCode}");
+    exit;
+}
+
+
 }
