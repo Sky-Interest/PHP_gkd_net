@@ -1,13 +1,12 @@
 <?php 
     require '../helpers.php';
+
+    require basePath('Database.php');
+    $config = require basePath('config/db.php');
+
+    $db = new Database($config);
+
     require basePath('Router.php');
-    // loadView('home');
-    // $routes = [
-    //     '/' => 'controllers/home.php',
-    //     '/listings' => 'controllers/listings/index.php',
-    //     '/listings/create' => 'controllers/listings/create.php',
-    //     '404' => 'controllers/error/404.php',
-    // ];
 
     $router = new Router();
     $routes = require basePath('routes.php');
