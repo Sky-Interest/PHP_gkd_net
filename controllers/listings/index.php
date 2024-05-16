@@ -1,2 +1,3 @@
 <?php
-echo '工作列表';
+loadView('listings/index');
+// echo'工作列表';

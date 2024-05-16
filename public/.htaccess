@@ -1,7 +1,18 @@
+; RewriteEngine On
+; # 如果请求的不是存在的文件
+; RewriteCond %{REQUEST_FILENAME} !-f
+; # 并且请求的不是存在的目录
+; RewriteCond %{REQUEST_FILENAME} !-d
+; # 则重写请求到index.php
+; RewriteRule ^(.*)$ index.php [L]
+
 RewriteEngine On
 # 如果请求的不是存在的文件
 RewriteCond %{REQUEST_FILENAME} !-f
 # 并且请求的不是存在的目录
 RewriteCond %{REQUEST_FILENAME} !-d
 # 则重写请求到index.php
-RewriteRule ^ index.php [L]
+RewriteRule ^(.*)$ index.php [L]
+
+DirectoryIndex index.php
+
