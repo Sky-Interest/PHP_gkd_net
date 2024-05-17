@@ -1,7 +1,12 @@
 <?php 
 
+
+
+
     require './../vendor/autoload.php';
     require '../helpers.php';
+
+    use Framework\Router;
 
     // require basePath('Framework/Database.php');
     // $config = require basePath('config/db.php');

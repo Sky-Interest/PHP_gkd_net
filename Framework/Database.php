@@ -1,5 +1,10 @@
 <?php
 
+namespace Framework;
+
+use PDO;
+
+
 class Database
 {
     public $conn;
@@ -20,8 +25,8 @@ class Database
         try {
             $this->conn = new PDO($dsn, $config['username'], $config['password'],$options);
             // echo "连接成功！";
-        } catch (PDOException $e) {
-            throw new Exception("数据库连接失败:{$e->getMessage()}");
+        } catch (\PDOException $e) {
+            throw new \Exception("数据库连接失败:{$e->getMessage()}");
         }
     }
 
@@ -37,8 +42,8 @@ class Database
         $sth->execute();
         return $sth;
 
-        }catch(PDOException $e){
-            throw new Exception("数据库请求执行失败:{$e->getMessage()}");
+        }catch(\PDOException $e){
+            throw new \Exception("数据库请求执行失败:{$e->getMessage()}");
         }
     }
 }
