@@ -10,3 +10,4 @@ $router->addGet('/','HomeController@index');
 $router->addGet('/listings','ListingController@index');
 $router->addGet('/listings/create','ListingController@create');
 $router->addGet('/listing/{id}','ListingController@show');
+$router->addPost('/listings','ListingController@store');
