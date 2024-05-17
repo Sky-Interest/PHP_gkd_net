@@ -47,3 +47,10 @@ function inspectAndDie($value)
 function sanitize($dirty){
     return filter_var(trim($dirty), FILTER_SANITIZE_SPECIAL_CHARS);
 }
+
+//重定向URI
+
+function redirect($uri){
+    header("location: {$uri}");
+    exit;
+}
