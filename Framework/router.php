@@ -8,13 +8,14 @@ class Router
 
     private function registerRoute($method, $uri, $action)
     {   
-        list($controller,$controllerMethon) = explode('@',$action);
+        list($controller,$controllerMethod) = explode('@',$action);
 
-        inspectAndDie($controllerMethon);
+        // inspectAndDie($controllerMethon);
         $this->routes[] = [
             'method' => $method,
             'uri' => $uri,
-            'controller' => $controller
+            'controller' => $controller,
+            'controllerMethod' => $controllerMethod
         ];
     }
 
@@ -46,22 +47,27 @@ class Router
     {
         foreach ($this->routes as $route) {
             if ($route['method'] === $method && $route['uri'] === $uri) {
-                require basePath('APP/' . $route['controller']);
-                return;
-            }
+                //获取控制器和控制器方法
+                $controller = 'App\\Controllers\\' . $route['controller'];
+                $controllerMethod = $route['controllerMethod'];
+
+                //实例化控制器和调用方法
+                $controllerInstance = new $controller();
+                $controllerInstance->$controllerMethod();
         }
         // http_response_code(404);
         // loadView('error/404');
         $this->error();
     }
-    
+}
+
     //接收HTTP状态码参数
     public function error($httpCode = 404)
-{
-    http_response_code($httpCode);
-    loadView("error/{$httpCode}");
-    exit;
-}
+    {
+        http_response_code($httpCode);
+        loadView("error/{$httpCode}");
+        exit;
+    }
 
 
 }
