@@ -42,3 +42,8 @@ function inspectAndDie($value)
     echo '<pre>';
 }
 
+//清洗数据
+
+function sanitize($dirty){
+    return filter_var(trim($dirty), FILTER_SANITIZE_SPECIAL_CHARS);
+}
