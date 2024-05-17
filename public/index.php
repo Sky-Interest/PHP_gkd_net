@@ -20,11 +20,11 @@
 
 
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    $method = $_SERVER['REQUEST_METHOD'];
+    // $method = $_SERVER['REQUEST_METHOD'];
 
+    $router->route($uri);
+
+
+//使用phpserver插件启动项目时，第2.14步重置根路径时请在设置的relative path中修改路径
 
     
-//这里uri获取到的是public/index，而在$routes中不存在这段，所以错误
-//使用phpserver插件启动项目时，第14步重置根路径时请在设置的relative path中修改路径
-
-    $router->route($uri, $method);

@@ -9,4 +9,4 @@ $router->addGet('/','HomeController@index');
 
 $router->addGet('/listings','ListingController@index');
 $router->addGet('/listings/create','ListingController@create');
-$router->addGet('/listing','ListingController@show');
+$router->addGet('/listing/{id}','ListingController@show');
