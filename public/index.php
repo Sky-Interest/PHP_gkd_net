@@ -1,12 +1,14 @@
 <?php 
+
+    require './../vendor/autoload.php';
     require '../helpers.php';
 
-    require basePath('Framework/Database.php');
+    // require basePath('Framework/Database.php');
     // $config = require basePath('config/db.php');
 
     // $db = new Database($config);
 
-    require basePath('Framework/Router.php');
+    // require basePath('Framework/Router.php');
 
     $router = new Router();
     $routes = require basePath('routes.php');
