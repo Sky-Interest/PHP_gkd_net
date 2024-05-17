@@ -1,12 +1,16 @@
 <?php
 
+namespace Framework;
 
 class Router
 {
     protected $routes = [];
 
-    private function registerRoute($method, $uri, $controller)
-    {
+    private function registerRoute($method, $uri, $action)
+    {   
+        list($controller,$controllerMethon) = explode('@',$action);
+
+        inspectAndDie($controllerMethon);
         $this->routes[] = [
             'method' => $method,
             'uri' => $uri,
