@@ -26,9 +26,14 @@ class Database
     }
 
     //执行数据库请求
-    public function query($query){
+    public function query($query,$params =[]){
         try{
             $sth = $this->conn->prepare($query);
+
+            foreach($params as $param => $value){
+                $sth->bindValue(':' . $param, $value);
+            }
+
         $sth->execute();
         return $sth;
 
