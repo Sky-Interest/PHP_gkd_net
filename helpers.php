@@ -15,14 +15,13 @@ function loadPartial($name)
     }
 }
 
-function loadView($name)
+//加载视图
+function loadView($name,$data = [])
 {
     $viewPath = basePath("views/{$name}.view.php");
 
-    // inspectAndDie($name);
-    // inspect($viewPath);
-
     if (file_exists($viewPath)) {
+        extract($data);
         require $viewPath;
     } else {
         echo "{$viewPath}视图不存在!";
