@@ -20,7 +20,7 @@
       <?php
       // var_dump($listings);
       foreach ($listings as $listing) : 
-        $listing = (object)$listing;//转化为对象进行下一步赋值
+        // $listing = (object)$listing;//转化为对象进行下一步赋值
       // var_dump($listing);
       // var_dump($listing->title);
       ?>

@@ -18,7 +18,7 @@ class Database
         ];
 
         try {
-            $this->conn = new PDO($dsn, $config['username'], $config['password']);
+            $this->conn = new PDO($dsn, $config['username'], $config['password'],$options);
             // echo "连接成功！";
         } catch (PDOException $e) {
             throw new Exception("数据库连接失败:{$e->getMessage()}");
