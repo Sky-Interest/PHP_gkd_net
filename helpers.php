@@ -41,3 +41,4 @@ function inspectAndDie($value)
     die(var_dump($value));
     echo '<pre>';
 }
+
