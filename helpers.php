@@ -6,7 +6,7 @@ function basePath($path = '')
 
 function loadPartial($name)
 {
-    $partialPath = basePath("views/partials/{$name}.php");
+    $partialPath = basePath("APP/views/partials/{$name}.php");
 
     if (file_exists($partialPath)) {
         require $partialPath;
@@ -18,7 +18,7 @@ function loadPartial($name)
 //加载视图
 function loadView($name,$data = [])
 {
-    $viewPath = basePath("views/{$name}.view.php");
+    $viewPath = basePath("APP/views/{$name}.view.php");
 
     if (file_exists($viewPath)) {
         extract($data);
