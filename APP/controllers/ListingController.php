@@ -114,4 +114,34 @@ class ListingController{
         }
 
     }
+
+    //删除列表项
+
+    public function destory($params){
+        //获取ID
+        $id = $params['id'];
+
+        //准备参数
+        $params = [
+            'id' => $id
+        ];
+
+        //查询数据库确认存在
+
+        $listings = $this->db->query('SELECT * FROM listinf WHERE id = :id', $params)->fetch();
+
+        //如果为空则列表项不存在
+        if(!$listings){
+            ErrorController::notFound('职位不存在！');
+            return;
+
+        }
+
+        //执行删除操作
+
+        $this->db->query('DELETE FROM listing WHERE id = :id', $params);
+
+        //重定向列表页
+        redirect('/listings');
+    }
 }

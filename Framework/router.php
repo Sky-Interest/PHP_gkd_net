@@ -48,6 +48,12 @@ class Router
     public function route($uri)
     {
         $requestMethod = $_SERVER['REQUEST_METHOD'];
+        //检查POST中的特殊字段 _method
+
+        if ($requestMethod === 'POST' && isset($_POST['_method'])){
+            //重写方法
+            $requestMethod = strtoupper($_POST['_method']);
+        }
 
         //拆分当前URI
 
