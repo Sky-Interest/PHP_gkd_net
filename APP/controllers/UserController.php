@@ -78,7 +78,40 @@ class UserController{
             //终止执行
             exit();
         }else{
-            // inspectAndDie('用户已注册！');
+            //检查电子邮件是否存在
+            $params = [
+                'email' => $email
+            ];
+
+            //查询是否有相同的电子邮件在数据库
+            $user = $this->db->query('SELECT * FROM users WHERE email = :email',$params)->fetch();
+
+            //若电子邮件被注册
+            if($user){
+                $errors['email'] ='该邮箱已注册!';
+                //重载页面并显示错误
+                loadView('users/create',[
+                    'errors' =>$errors
+                ]);
+                //终止执行
+                exit();
+            }
+
+            //创建用户
+            $params = [
+                'name' => $name,
+                'email' => $email,
+                'city' => $city,
+                'province' => $province,
+                'password' => password_hash($password, PASSWORD_DEFAULT)//使用哈希处理密码
+            ];
+
+            //插入新用户
+            $this->db->query('INSERT INTO users (name, email, city,province, password) 
+            VALUES(:name, :email, :city, :province, :password)', $params);
+
+            //创建成功后重定向回首页
+            redirect('/');
         }
     }       
 }

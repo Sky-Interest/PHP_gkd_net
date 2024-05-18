@@ -16,6 +16,7 @@
               name="name"
               placeholder="全名"
               class="w-full px-4 py-2 border rounded focus:outline-none"
+              value="<?= $user['name'] ?? '' ?>"
             />
           </div>
           <div class="mb-4">
@@ -24,7 +25,7 @@
               name="email"
               placeholder="电子邮箱地址"
               class="w-full px-4 py-2 border rounded focus:outline-none"
-            />
+              value="<?= $user['email'] ?? '' ?>"/>
           </div>
           <div class="mb-4">
             <input
@@ -32,7 +33,7 @@
               name="city"
               placeholder="城市"
               class="w-full px-4 py-2 border rounded focus:outline-none"
-            />
+              value="<?= $user['city'] ?? '' ?>"/>
           </div>
           <div class="mb-4">
             <input
@@ -40,7 +41,7 @@
               name="province"
               placeholder="省份"
               class="w-full px-4 py-2 border rounded focus:outline-none"
-            />
+              value="<?= $user['province'] ?? '' ?>"/>
           </div>
           <div class="mb-4">
             <input
