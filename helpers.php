@@ -3,12 +3,13 @@ function basePath($path = '')
 {
     return __DIR__ . '/' . $path;
 }
-
-function loadPartial($name)
+//加载部分视图
+function loadPartial($name,$data = [])
 {
     $partialPath = basePath("App/views/partials/{$name}.php");
 
     if (file_exists($partialPath)) {
+        extract($data);
         require $partialPath;
     } else {
         echo "{$name}部分视图不存在";
