@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Framework\Database;
 use Framework\Validation;
+use Framework\Session;
 
 class UserController{
 
@@ -109,6 +110,18 @@ class UserController{
             //插入新用户
             $this->db->query('INSERT INTO users (name, email, city,province, password) 
             VALUES(:name, :email, :city, :province, :password)', $params);
+
+            //获取新用户ID
+            $userId = $this->db->conn->lastInsertId();
+
+            Session::set('user',[
+                'id' => $userId,
+                'name' => $name,
+                'email' => $email,
+                'city' => $city,
+                'province' => $province
+            ]);
+
 
             //创建成功后重定向回首页
             redirect('/');

@@ -28,7 +28,7 @@ class Session{
 
     //清除指定会话键
     public static function clear($key){
-        if(!isset($_SESSION[$key])){
+        if(isset($_SESSION[$key])){
             unset($_SESSION[$key]);
         }
     }

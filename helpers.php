@@ -40,7 +40,7 @@ function inspectAndDie($value)
 {
     echo '<pre>';
     die(var_dump($value));
-    echo '<pre>';
+    
 }
 
 //清洗数据
