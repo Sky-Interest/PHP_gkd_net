@@ -76,8 +76,41 @@ class ListingController{
                 'listing'=> $newListingData
             ]);
         }else{
-            //没错则输出成功消息
-            echo'成功提交! ';
+            //初始化一个数组来收集所有学校名称，为构建SQL查询做准备
+            $fields = [];
+
+            //遍历$newListingData数组，收集字段名称
+
+            foreach($newListingData as $field => $value){
+                //末尾追加元素
+                $fields[] = $field;
+            }
+
+            //使用implode转换字符串
+            $fields = implode(', ', $fields);
+
+            //初始化一个数组收集占位符
+            $values = [];
+
+            //遍历$newListingData 为每个字段生成一个占位符，处理空字符串为null
+            foreach($newListingData as $field => $value){
+                if($value === ''){
+                    $newListingData[$field] = null;
+
+                }
+                $values[] = ':' . $field;
+            }
+
+            $fields = implode(', ', $values);
+
+            //构建SQL插入语句
+            $query = "INSERT INTO listing ({$fields}) VALUES ({$values})";
+
+            //执行SQL操作
+            $this->db->query($query,$newListingData);
+
+            //重定向列表
+            redirect('/listings');
         }
 
     }

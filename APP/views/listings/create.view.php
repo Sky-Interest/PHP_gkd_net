@@ -39,6 +39,11 @@
                     class="w-full px-4 py-2 border rounded focus:outline-none"
                     value="<?= $listing['benefits'] ?? '' ?>" />
             </div>
+            <div class="mb-4">
+                <input type="text" name="tags" placeholder="标签"
+                    class="w-full px-4 py-2 border rounded focus:outline-none"
+                    value="<?= $listing['tags'] ?? '' ?>" />
+            </div>
             <h2 class="text-2xl font-bold mb-6 text-center text-gray-500">
                 公司信息 & 地点
             </h2>
