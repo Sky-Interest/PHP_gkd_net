@@ -40,7 +40,7 @@ class Router
     }
 
     //添加DELETE路由
-    public function addPatch($uri, $controller)
+    public function addDelete($uri, $controller)
     {
         $this->registerRoute('DELETE', $uri, $controller);
     }
@@ -48,12 +48,19 @@ class Router
     public function route($uri)
     {
         $requestMethod = $_SERVER['REQUEST_METHOD'];
+
+        // var_dump($requestMethod);
         //检查POST中的特殊字段 _method
 
         if ($requestMethod === 'POST' && isset($_POST['_method'])){
             //重写方法
+        // var_dump($requestMethod);
+
             $requestMethod = strtoupper($_POST['_method']);
-        }
+        // var_dump($requestMethod);
+        // return;
+
+        };
 
         //拆分当前URI
 

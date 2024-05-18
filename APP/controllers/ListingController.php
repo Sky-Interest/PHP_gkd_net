@@ -46,7 +46,7 @@ class ListingController{
     //在数据库在存储数据
 
     public function store(){
-        $allowedFields = ['title','description','salary','tags','company','address','city','pvovince','phone','email','requirements','benefits'];
+        $allowedFields = ['title','description','salary','tags','company','address','city','province','phone','email','requirements','benefits'];
 
         //从 $_POST中提取允许的字段
         $newListingData = array_intersect_key($_POST,array_flip($allowedFields));
@@ -101,7 +101,7 @@ class ListingController{
                 $values[] = ':' . $field;
             }
 
-            $fields = implode(', ', $values);
+            $values = implode(', ', $values);
 
             //构建SQL插入语句
             $query = "INSERT INTO listing ({$fields}) VALUES ({$values})";
@@ -117,7 +117,7 @@ class ListingController{
 
     //删除列表项
 
-    public function destory($params){
+    public function destroy($params){
         //获取ID
         $id = $params['id'];
 
@@ -128,10 +128,10 @@ class ListingController{
 
         //查询数据库确认存在
 
-        $listings = $this->db->query('SELECT * FROM listinf WHERE id = :id', $params)->fetch();
+        $listing = $this->db->query('SELECT * FROM listing WHERE id = :id', $params)->fetch();
 
         //如果为空则列表项不存在
-        if(!$listings){
+        if(!$listing){
             ErrorController::notFound('职位不存在！');
             return;
 
@@ -140,6 +140,11 @@ class ListingController{
         //执行删除操作
 
         $this->db->query('DELETE FROM listing WHERE id = :id', $params);
+
+        //设置提示信息
+
+        $_SESSION['success_message'] ='删除职位成功！';
+
 
         //重定向列表页
         redirect('/listings');
