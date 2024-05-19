@@ -185,9 +185,15 @@ class ListingController
             //如果未找到列表项，调用错误控制器并返回
             ErrorController::notFound('职位不存在!');
             return;
-            //如果列表项存在，加载编辑视图并传递列表项数据
-
         }
+
+        //授权
+        if (!Authorisation::isOwner($listing->user_id)){
+            Session::setFlashMessage('error_message','你没有权限修改此职位！');
+            return redirect('/listings/' . $listing->id);
+        }
+
+        //如果列表项存在，加载编辑视图并传递列表项数据
         loadView('listings/edit', [
             'listing' => $listing
         ]);
@@ -210,6 +216,12 @@ class ListingController
             // 调用错误控制器并结束方法执行
             ErrorController::notFound('职位不存在!');
             return;
+        }
+
+        //授权
+        if (!Authorisation::isOwner($listing->user_id)){
+            Session::setFlashMessage('error_message','你没有权限修改此职位！');
+            return redirect('/listings/' . $listing->id);
         }
 
         // 定义可以从表单接收的字段列表
