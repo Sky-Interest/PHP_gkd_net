@@ -119,6 +119,8 @@ class ListingController
             //执行SQL操作
             $this->db->query($query, $newListingData);
 
+            Session::setFlashMessage('success_message','已成功创建职位！');
+
             //重定向列表
             redirect('/listings');
         }
@@ -148,7 +150,7 @@ class ListingController
 
         if(!Authorisation::isOwner($listing->user_id)){
             inspect($_SESSION);
-            $_SESSION['error_message'] = '你没有权限删除此职位！';
+            Session::setFlashMessage('error_message','你没有权限删除此职位！');
             return redirect('/listings/' . $listing->id);
 
         }
@@ -159,7 +161,7 @@ class ListingController
 
         //设置提示信息
 
-        $_SESSION['success_message'] = '删除职位成功！';
+        Session::setFlashMessage('error_message','删除职位成功！');
 
 
         //重定向列表页
@@ -247,7 +249,7 @@ class ListingController
             //执行 SQL 更新操作
             $this->db->query($updateQuery, $updateValues);
             //设置成功消息
-            $_SESSION['success_message'] = '职位信息已更新!';
+            Session::setFlashMessage('success_message','职位信息已更新!');
             //重定向到列表项详情页面
             redirect('/listings/' . $id);
         }
