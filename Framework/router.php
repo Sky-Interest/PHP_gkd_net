@@ -3,12 +3,13 @@
 namespace Framework;
 
 use App\Controllers\ErrorController;
+use Framework\Middleware\Authorise;
 
 class Router
 {
     protected $routes = [];
 
-    private function registerRoute($method, $uri, $action)
+    private function registerRoute($method, $uri, $action, $middleware= [])
     {
         list($controller, $controllerMethod) = explode('@', $action);
 
@@ -17,32 +18,33 @@ class Router
             'method' => $method,
             'uri' => $uri,
             'controller' => $controller,
-            'controllerMethod' => $controllerMethod
+            'controllerMethod' => $controllerMethod,
+            'middleware' => $middleware
         ];
     }
 
     //添加GET路由
-    public function addGet($uri, $controller)
+    public function addGet($uri, $controller, $middleware = [])
     {
-        $this->registerRoute('GET', $uri, $controller);
+        $this->registerRoute('GET', $uri, $controller, $middleware);
     }
 
     //添加POST路由
-    public function addPost($uri, $controller)
+    public function addPost($uri, $controller,$middleware = [])
     {
-        $this->registerRoute('POST', $uri, $controller);
+        $this->registerRoute('POST', $uri, $controller, $middleware);
     }
 
     //添加PUT路由
-    public function addPut($uri, $controller)
+    public function addPut($uri, $controller,$middleware = [])
     {
-        $this->registerRoute('PUT', $uri, $controller);
+        $this->registerRoute('PUT', $uri, $controller, $middleware);
     }
 
     //添加DELETE路由
-    public function addDelete($uri, $controller)
+    public function addDelete($uri, $controller,$middleware = [])
     {
-        $this->registerRoute('DELETE', $uri, $controller);
+        $this->registerRoute('DELETE', $uri, $controller, $middleware);
     }
 
     public function route($uri)
@@ -96,6 +98,11 @@ class Router
             }
 
             if ($match) {
+
+                foreach($route['middleware'] as $middleware){
+                    (new Authorise())->handle($middleware);
+                }
+
                 //获取控制器和控制器方法
                 $controller = 'App\\Controllers\\' . $route['controller'];
                 $controllerMethod = $route['controllerMethod'];
