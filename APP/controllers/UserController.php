@@ -126,5 +126,22 @@ class UserController{
             //创建成功后重定向回首页
             redirect('/');
         }
-    }       
+    }     
+    
+    //注销用户并结束会话
+
+    public function logout() {
+        //调用clearAll
+
+        Session::clearAll();
+
+        //获取cookie
+        $params = session_get_cookie_params();
+
+        //删除cookie，过期时间为1天后
+        setcookie('PHPSESSID', '', time() - 86400, $params['path'],$params['domain']);
+
+        //重定向回首页
+        redirect('/');
+    }
 }
