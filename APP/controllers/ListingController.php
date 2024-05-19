@@ -266,4 +266,34 @@ class ListingController
             redirect('/listings/' . $id);
         }
     }
+
+    //根据关键词和地点搜索列表
+    public function search(){
+        //GET中获取关键词和地点,没有则为空字符串
+        $keywords = isset($_GET['keywords']) ? trim($_GET['keywords']) : '';
+        $location = isset($_GET['location']) ? trim($_GET['location']) : '';
+
+        //构建SQL查询
+        $query = "SELECT * FROM listing WHERE 
+        (title LIKE :keywords OR description LIKE :keywords OR 
+        tags LIKE :keywords OR company LIKE :keywords) AND 
+        (city LIKE :location OR province LIKE :location)";
+
+        //准备查询参数
+        $params = [
+            'keywords' => "%{$keywords}%",
+            'location' => "%{$location}%"
+        ];
+
+        //执行查询并获取所有匹配的记录
+        $listings = $this->db->query($query, $params)->fetchAll();
+
+        //加载列表视图,传递查询到的数据及条件
+        loadView('/listings/index',[
+            'listings' => $listings,
+            'keywords' => $keywords,
+            'location' => $location
+        ]);
+
+    }
 }
