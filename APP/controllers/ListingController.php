@@ -4,6 +4,10 @@ namespace App\Controllers;
 
 use Framework\Database;
 use Framework\Validation;
+use Framework\Session;
+use Framework\Middleware\Authorise;
+use Framework\Authorisation;
+
 
 class ListingController
 {
@@ -16,13 +20,16 @@ class ListingController
         $this->db = new Database($config);
     }
 
+    //展示所有岗位
     public function index()
     {
-        $listings = $this->db->query('SELECT * FROM listing')->fetchAll();
+        $listings = $this->db->query('SELECT * FROM listing ORDER BY created_at DESC')->fetchAll();
 
         loadView('listings/index', ['listings' => $listings]);
     }
 
+
+    //创建实习
     public function create()
     {
         loadView('listings/create');
@@ -56,7 +63,7 @@ class ListingController
         $newListingData = array_intersect_key($_POST, array_flip($allowedFields));
 
         //设置用户ID
-        $newListingData['user_id'] = 1;
+        $newListingData['user_id'] = Session::get('user')['id'];
 
         //清洗数据
         $newListingData = array_map('sanitize', $newListingData);
@@ -137,6 +144,13 @@ class ListingController
         if (!$listing) {
             ErrorController::notFound('职位不存在！');
             return;
+        }
+
+        if(!Authorisation::isOwner($listing->user_id)){
+            inspect($_SESSION);
+            $_SESSION['error_message'] = '你没有权限删除此职位！';
+            return redirect('/listings/' . $listing->id);
+
         }
 
         //执行删除操作
