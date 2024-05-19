@@ -5,12 +5,12 @@
     <div class="flex justify-center items-center mt-20">
       <div class="bg-white p-8 rounded-lg shadow-md w-full md:w-500 mx-6">
         <h2 class="text-4xl text-center font-bold mb-4">登录</h2>
-        <!-- 可以根据需要启用消息提示
-        <div class="message bg-red-100 p-3 my-3">这是一个错误消息。</div>
-        <div class="message bg-green-100 p-3 my-3">
-          这是一个成功消息。
-        </div> -->
-        <form>
+        <?php
+          loadPartial('errors',[
+            'errors' => $errors ?? []
+          ])
+        ?>
+        <form method="POST" action="/auth/login" >
           <div class="mb-4">
             <input
               type="email"

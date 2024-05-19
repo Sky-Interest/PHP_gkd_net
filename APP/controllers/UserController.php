@@ -144,4 +144,73 @@ class UserController{
         //重定向回首页
         redirect('/');
     }
+
+    //使用电子邮箱和密码验证身份
+
+    public function authenticate(){
+        //从POST获取
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        //初始化错误数组
+        $errors = []; 
+
+        //验证电子邮件的格式
+        if(!Validation::email($email)){
+            $errors['email'] = '请输入合法的邮箱地址！';
+
+        }
+
+        //验证密码长度
+        if(!Validation::string($password,6,50)){
+            $errors['password'] = '密码至少为6位！';
+            
+        }
+
+        //如果存在验证错误，重载登录页面并显示错误
+        if (!empty($errors)){
+            loadView('users/login',[
+                'errors' => $errors
+            ]);
+            exit();
+        }
+
+        //准备查询邮箱参数
+        $params = [
+            'email' => $email
+        ];
+
+        //从数据库查询用户
+        $user = $this->db->query('SELECT * FROM users WHERE email = :email', $params)->fetch();
+
+        //未找到则邮箱不正确
+        if (!$user){
+            $errors['email'] = '用户不存在或密码错误！';
+            loadView('users/login',[
+                'errors' => $errors
+            ]);
+            exit();
+        }
+
+        //验证密码是否正确
+        if (!password_verify($password,$user->password)){
+            $errors['email'] = '用户不存在或密码错误！';
+            loadView('users/login',[
+                'errors' => $errors
+            ]);
+            exit();
+        }
+
+        //验证成功则设置用户信息
+        Session::set('user',[
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'city' => $user->city,
+            'province' => $user->province
+        ]);
+
+        //重定向
+        redirect('/');
+    }
 }
